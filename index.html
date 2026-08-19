@@ -40,7 +40,6 @@
         { time: "7:00 PM", timeAr: "٧:٠٠ م", title: "بدء الحفل" }
       ],
       verse: "وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً",
-      musicUrl: "",
       copy: {
         kicker: "YOU'VE RECEIVED AN INVITATION FROM",
         openBtn: "OPEN THE ENVELOPE",
@@ -154,24 +153,6 @@
       font-family: "Great Vibes", cursive; font-size: 26px; color: var(--gold);
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ─── Music ─── */
-    #musicBtn {
-      position: fixed; top: calc(14px + var(--safe-top)); left: 14px;
-      z-index: 70; width: 46px; height: 46px; border-radius: 50%;
-      display: grid; place-items: center;
-      background: var(--frame); color: #fff;
-      box-shadow: 0 8px 24px rgba(184,134,11,0.35);
-      will-change: transform;
-    }
-    #musicBtn[hidden] { display: none !important; }
-    #musicBtn svg { width: 20px; height: 20px; }
-    #musicBtn.is-muted { filter: grayscale(0.4); opacity: 0.85; }
-    #musicBtn.is-hint { animation: musicHint 1.6s ease-in-out infinite; }
-    @keyframes musicHint {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-    }
 
     /* ─── Florals ─── */
     .floral {
@@ -500,12 +481,9 @@
       font-family: "Cormorant Garamond", serif;
       font-style: italic; letter-spacing: 0.34em; text-indent: 0.34em;
       text-align: center; color: var(--muted); font-size: 14px;
-      direction: ltr; margin-top: 6px;
+      direction: ltr; margin-top: 6px; margin-bottom: 8px;
     }
     .rings { width: 120px; margin: 12px auto 4px; display: block; }
-    .couple-art {
-      width: min(72%, 260px); margin: 10px auto 0;
-    }
 
     .mono-wrap { text-align: center; margin-bottom: 10px; }
     .mono-big {
@@ -721,17 +699,11 @@
 
     /* ─── Finale ─── */
     .finale { text-align: center; padding-bottom: 28px; }
-    .portrait {
-      position: relative; width: min(78vw, 300px); height: min(78vw, 300px);
-      margin: 0 auto 18px;
+    .finale-ornament {
+      width: min(62vw, 220px); margin: 0 auto 14px;
     }
-    .portrait .wreath {
-      position: absolute; inset: 0; mix-blend-mode: multiply; opacity: 0.92;
-    }
-    .portrait .faces {
-      position: absolute; inset: 18%;
-      border-radius: 50%; object-fit: cover; object-position: center 12%;
-      filter: saturate(0.92) contrast(0.98);
+    .finale-ornament img {
+      width: 100%; mix-blend-mode: multiply; opacity: 0.9;
     }
     .finale-line {
       font-family: "Aref Ruqaa", serif;
@@ -798,16 +770,6 @@
       <div class="pre-sub" data-bind="namesEn"></div>
     </div>
   </div>
-
-  <button id="musicBtn" class="is-muted" type="button" aria-label="تشغيل الموسيقى" hidden>
-    <svg class="ico-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" hidden>
-      <path d="M9 18V6l12-2v12" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" />
-    </svg>
-    <svg class="ico-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
-      <path d="M9 18V6l12-2v12" /><circle cx="6" cy="18" r="3" /><circle cx="18" cy="16" r="3" />
-      <path d="M3 3l18 18" />
-    </svg>
-  </button>
 
   <section id="landing">
     <div class="landing-sheet">
@@ -883,7 +845,6 @@
           <path d="M138 36c-4 6-4 14 2 18" stroke="#8A9A7B" stroke-width="1" />
         </svg>
         <p class="getting reveal-child" data-bind="gettingMarried"></p>
-        <img class="couple-art reveal-child" src="assets/couple.webp" alt="العروسان" loading="lazy" />
       </section>
 
       <!-- Official card -->
@@ -1004,9 +965,8 @@
       <!-- Finale -->
       <section class="section gold-frame finale reveal" id="finale">
         <svg class="draw-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><rect class="draw-rect" x="1" y="1" width="98" height="98" /></svg>
-        <div class="portrait reveal-child">
-          <img class="faces" src="assets/couple.webp" alt="العروسان" loading="lazy" />
-          <img class="wreath" src="assets/wreath.webp" alt="" />
+        <div class="finale-ornament reveal-child">
+          <img src="assets/wreath.webp" alt="" />
         </div>
         <p class="finale-line reveal-child" data-bind="finale"></p>
         <svg class="divider reveal-child" viewBox="0 0 240 18" fill="none" aria-hidden="true">
@@ -1103,87 +1063,6 @@
       $("#waBtn").href = "https://wa.me/" + C.whatsapp.number + "?text=" + encodeURIComponent(C.whatsapp.message);
 
       document.title = C.couple.groom.nameEn + " & " + C.couple.bride.nameEn + " — دعوة زفاف";
-
-      /* ── Audio ── */
-      const musicBtn = $("#musicBtn");
-      const audio = {
-        ctx: null, master: null, playing: false, tag: null, nodes: [],
-        async ensure() {
-          if (C.musicUrl) {
-            if (!this.tag) {
-              this.tag = new Audio(C.musicUrl);
-              this.tag.loop = true;
-              this.tag.volume = 0.42;
-            }
-            return;
-          }
-          if (this.ctx) return;
-          const AC = window.AudioContext || window.webkitAudioContext;
-          this.ctx = new AC();
-          this.master = this.ctx.createGain();
-          this.master.gain.value = 0;
-          this.master.connect(this.ctx.destination);
-          const makePad = (freq, type, gain) => {
-            const o = this.ctx.createOscillator();
-            const g = this.ctx.createGain();
-            o.type = type; o.frequency.value = freq;
-            g.gain.value = gain;
-            o.connect(g); g.connect(this.master);
-            o.start();
-            this.nodes.push(o, g);
-          };
-          makePad(196, "sine", 0.03);
-          makePad(246.9, "sine", 0.018);
-          makePad(293.7, "triangle", 0.012);
-        },
-        chime() {
-          if (!this.ctx || !this.playing) return;
-          const notes = [523.25, 659.25, 783.99, 880, 587.33];
-          const f = notes[Math.floor(Math.random() * notes.length)];
-          const o = this.ctx.createOscillator();
-          const g = this.ctx.createGain();
-          o.type = "sine"; o.frequency.value = f;
-          g.gain.setValueAtTime(0.0001, this.ctx.currentTime);
-          g.gain.exponentialRampToValueAtTime(0.045, this.ctx.currentTime + 0.04);
-          g.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + 1.8);
-          o.connect(g); g.connect(this.master); o.start(); o.stop(this.ctx.currentTime + 2);
-        },
-        async play() {
-          await this.ensure();
-          if (this.tag) {
-            try { await this.tag.play(); this.playing = true; } catch (e) { return false; }
-          } else {
-            if (this.ctx.state === "suspended") await this.ctx.resume();
-            this.master.gain.cancelScheduledValues(this.ctx.currentTime);
-            this.master.gain.linearRampToValueAtTime(0.22, this.ctx.currentTime + 1.4);
-            this.playing = true;
-            this._t = setInterval(() => this.chime(), 2800);
-            this.chime();
-          }
-          this.syncBtn();
-          return true;
-        },
-        pause() {
-          if (this.tag) this.tag.pause();
-          if (this.ctx && this.master) {
-            this.master.gain.cancelScheduledValues(this.ctx.currentTime);
-            this.master.gain.linearRampToValueAtTime(0.0001, this.ctx.currentTime + 0.4);
-          }
-          clearInterval(this._t);
-          this.playing = false;
-          this.syncBtn();
-        },
-        syncBtn() {
-          musicBtn.classList.toggle("is-muted", !this.playing);
-          musicBtn.setAttribute("aria-label", this.playing ? "كتم الموسيقى" : "تشغيل الموسيقى");
-          musicBtn.querySelector(".ico-on").hidden = !this.playing;
-          musicBtn.querySelector(".ico-off").hidden = this.playing;
-        }
-      };
-      musicBtn.addEventListener("click", async () => {
-        musicBtn.classList.remove("is-hint");
-        if (audio.playing) audio.pause(); else await audio.play();
-      });
 
       /* ── Petals ── */
       const burstCanvas = $("#petals");
@@ -1443,12 +1322,9 @@
       let opened = false;
       $("#openBtn").addEventListener("click", openEnvelope);
 
-      async function openEnvelope() {
+      function openEnvelope() {
         if (opened) return; opened = true;
         envelope.classList.add("is-opening");
-        const okMusic = await audio.play();
-        musicBtn.hidden = false;
-        if (!okMusic) musicBtn.classList.add("is-hint");
 
         if (REDUCE || typeof gsap === "undefined") {
           finishOpen(); return;
