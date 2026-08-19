@@ -190,55 +190,95 @@
     /* ─── Landing ─── */
     #landing {
       position: fixed; inset: 0; z-index: 50;
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; gap: 22px;
-      padding: calc(28px + var(--safe-top)) 20px calc(28px + var(--safe-bot));
-      background: var(--ivory);
+      display: flex; align-items: center; justify-content: center;
+      padding: calc(16px + var(--safe-top)) 14px calc(16px + var(--safe-bot));
+      background-color: var(--ivory);
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E"),
+        radial-gradient(ellipse at 50% 18%, rgba(230,199,102,0.14), transparent 52%),
+        radial-gradient(ellipse at 50% 88%, rgba(138,154,123,0.08), transparent 48%);
     }
     #landing.is-gone {
       opacity: 0; pointer-events: none; visibility: hidden;
       transition: opacity 0.8s var(--lux), visibility 0.8s;
     }
+    .landing-sheet {
+      position: relative;
+      width: min(100%, 400px);
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center;
+      padding: 30px 22px 28px;
+      border: 1px solid rgba(201,162,39,0.62);
+      box-shadow:
+        inset 0 0 0 7px var(--ivory),
+        inset 0 0 0 8px rgba(201,162,39,0.5),
+        0 18px 40px rgba(80,60,20,0.08);
+      background: rgba(255,254,251,0.28);
+    }
+    .landing-corner {
+      position: absolute; width: 42px; height: 42px; color: var(--gold); opacity: 0.85;
+      pointer-events: none;
+    }
+    .landing-corner.tl { top: 10px; right: 10px; }
+    .landing-corner.tr { top: 10px; left: 10px; transform: scaleX(-1); }
+    .landing-corner.bl { bottom: 10px; right: 10px; transform: scaleY(-1); }
+    .landing-corner.br { bottom: 10px; left: 10px; transform: scale(-1); }
     .kicker {
       font-family: "Cormorant Garamond", serif;
-      font-size: clamp(9px, 2.6vw, 12px);
-      letter-spacing: 0.42em;
-      text-indent: 0.42em;
+      font-size: clamp(10px, 2.7vw, 12px);
+      letter-spacing: 0.38em;
+      text-indent: 0.38em;
       color: var(--muted);
       text-transform: uppercase;
       direction: ltr;
       text-align: center;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .landing-rule {
+      display: block; width: 72px; height: 14px; margin: 8px 0 6px;
+      background:
+        linear-gradient(90deg, transparent, #C9A227 12%, #C9A227 88%, transparent) center / 100% 1px no-repeat,
+        radial-gradient(circle, #C9A227 1.5px, transparent 1.7px) center / 8px 8px no-repeat;
     }
     .names-script {
       font-family: "Great Vibes", cursive;
-      font-size: clamp(44px, 14vw, 72px);
-      line-height: 1.1;
+      font-size: clamp(58px, 17vw, 86px);
+      line-height: 0.9;
       direction: ltr;
       text-align: center;
       font-weight: 400;
       position: relative;
-      display: inline-block;
-      color: #C9A227;
-      background: var(--frame);
-      background-size: 220% 220%;
-      -webkit-background-clip: text; background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 1px 0 rgba(184,134,11,0.2));
+      display: flex; flex-direction: column; align-items: center;
+      color: #7A5A0E;
+      -webkit-text-stroke: 0.45px rgba(92,68,12,0.35);
+      paint-order: stroke fill;
+      text-shadow:
+        0 1px 0 rgba(242,223,160,0.9),
+        0 2px 0 rgba(184,134,11,0.18),
+        0 10px 18px rgba(139,105,20,0.16);
     }
+    .names-script .nm { display: block; padding: 0 4px; }
     .names-script .amp {
-      font-size: 0.55em; padding: 0 10px; color: #B8860B;
-      -webkit-text-fill-color: #B8860B; vertical-align: 6px;
+      font-size: 0.36em;
+      line-height: 1;
+      padding: 4px 0 8px;
+      color: #C9A227;
+      -webkit-text-stroke: 0;
+      text-shadow: none;
+      letter-spacing: 0;
     }
     .shimmer-mask {
-      position: relative; display: inline-block;
+      position: relative; display: block; width: 100%;
+      margin: 2px 0 10px;
     }
     .shimmer-mask::after {
       content: "";
-      position: absolute; inset: -8% -20%;
-      background: linear-gradient(115deg, transparent 32%, rgba(255,255,255,0.7) 50%, transparent 68%);
+      position: absolute; inset: -6% 8%;
+      background: linear-gradient(115deg, transparent 36%, rgba(255,255,255,0.55) 50%, transparent 64%);
       transform: translateX(-130%) skewX(-18deg);
       animation: sweep 4s ease-in-out infinite;
-      pointer-events: none; mix-blend-mode: screen;
+      pointer-events: none; mix-blend-mode: soft-light;
     }
     @keyframes sweep {
       0% { transform: translateX(-130%) skewX(-18deg); }
@@ -248,11 +288,11 @@
 
     .env-stage {
       perspective: 1400px;
-      margin: 8px 0 6px;
+      margin: 8px 0 4px;
     }
     .envelope {
-      width: min(86vw, 340px);
-      height: 218px;
+      width: min(78vw, 300px);
+      height: 196px;
       position: relative;
       transform-style: preserve-3d;
       will-change: transform;
@@ -266,9 +306,12 @@
     .env-body {
       position: absolute; inset: 0;
       background: linear-gradient(180deg, #FFFEFB 0%, #F3EBDA 100%);
-      border: 1px solid rgba(201,162,39,0.38);
+      border: 1px solid rgba(201,162,39,0.5);
       border-radius: 2px 2px 8px 8px;
-      box-shadow: 0 22px 44px rgba(80,60,20,0.16), inset 0 1px 0 #fff;
+      box-shadow:
+        0 20px 36px rgba(80,60,20,0.14),
+        inset 0 0 0 3px #FFFEFB,
+        inset 0 0 0 4px rgba(201,162,39,0.28);
       overflow: visible;
       transform-style: preserve-3d;
     }
@@ -362,31 +405,34 @@
       opacity: 0;
     }
     .env-roses {
-      position: absolute; right: -18px; top: -22px;
-      width: 108px; z-index: 9; pointer-events: none;
+      position: absolute; right: -14px; top: -18px;
+      width: 92px; z-index: 9; pointer-events: none;
       mix-blend-mode: multiply; opacity: 0.95;
       transform: rotate(8deg);
     }
 
     .open-btn {
-      margin-top: 10px;
+      margin-top: 18px;
       font-family: "Cormorant Garamond", serif;
-      letter-spacing: 0.28em;
-      text-indent: 0.28em;
-      font-size: 12px;
+      letter-spacing: 0.34em;
+      text-indent: 0.34em;
+      font-size: 11px;
+      font-weight: 500;
       text-transform: uppercase;
       direction: ltr;
-      padding: 14px 28px;
-      color: #5a4a18;
+      padding: 12px 26px;
+      color: #6a5416;
       border-radius: 999px;
-      background: var(--white);
+      background: transparent;
       border: 1px solid var(--gold);
-      box-shadow: 0 0 0 0 rgba(201,162,39,0.45);
-      animation: btnPulse 2.4s ease-in-out infinite;
+      box-shadow:
+        inset 0 0 0 4px rgba(247,243,233,0.95),
+        inset 0 0 0 5px rgba(201,162,39,0.55);
+      animation: btnPulse 3.2s ease-in-out infinite;
     }
     @keyframes btnPulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(201,162,39,0.4); }
-      70% { box-shadow: 0 0 0 10px rgba(201,162,39,0); }
+      0%, 100% { box-shadow: inset 0 0 0 4px rgba(247,243,233,0.95), inset 0 0 0 5px rgba(201,162,39,0.55), 0 0 0 0 rgba(201,162,39,0.28); }
+      70% { box-shadow: inset 0 0 0 4px rgba(247,243,233,0.95), inset 0 0 0 5px rgba(201,162,39,0.55), 0 0 0 8px rgba(201,162,39,0); }
     }
 
     #petals, #petals-bg {
@@ -764,12 +810,22 @@
   </button>
 
   <section id="landing">
-    <p class="kicker" data-bind="kicker"></p>
-    <div class="shimmer-mask">
-      <h1 class="names-script">
-        <span data-bind="groomEn"></span><span class="amp">&amp;</span><span data-bind="brideEn"></span>
-      </h1>
-    </div>
+    <div class="landing-sheet">
+      <svg class="landing-corner tl" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M8 52c8-2 16-10 18-22M8 52c12-6 22-6 34-2" /><path d="M10 40c10-18 28-28 42-30" /></svg>
+      <svg class="landing-corner tr" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M8 52c8-2 16-10 18-22M8 52c12-6 22-6 34-2" /><path d="M10 40c10-18 28-28 42-30" /></svg>
+      <svg class="landing-corner bl" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M8 52c8-2 16-10 18-22M8 52c12-6 22-6 34-2" /><path d="M10 40c10-18 28-28 42-30" /></svg>
+      <svg class="landing-corner br" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true"><path d="M8 52c8-2 16-10 18-22M8 52c12-6 22-6 34-2" /><path d="M10 40c10-18 28-28 42-30" /></svg>
+
+      <p class="kicker" data-bind="kicker"></p>
+      <span class="landing-rule" aria-hidden="true"></span>
+      <div class="shimmer-mask">
+        <h1 class="names-script">
+          <span class="nm" data-bind="groomEn"></span>
+          <span class="amp">&amp;</span>
+          <span class="nm" data-bind="brideEn"></span>
+        </h1>
+      </div>
+      <span class="landing-rule" aria-hidden="true"></span>
 
     <div class="env-stage">
       <div class="envelope" id="envelope">
@@ -800,6 +856,7 @@
     </div>
 
     <button class="open-btn" id="openBtn" type="button" data-bind="openBtn"></button>
+    </div>
   </section>
 
   <main id="invite">
