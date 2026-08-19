@@ -1055,7 +1055,7 @@
       C.events.forEach((ev, i) => {
         const item = document.createElement("div");
         item.className = "tl-item " + (i % 2 === 0 ? "is-start" : "is-end");
-        item.innerHTML = '<span class="tl-dot"></span><div class="tl-time">' + ev.time + " · " + ev.timeAr + '</div><div class="tl-title">' + ev.title + "</div>";
+        item.innerHTML = '<span class="tl-dot"></span><div class="tl-time">' + ev.timeAr + '</div><div class="tl-title">' + ev.title + "</div>";
         tlRoot.appendChild(item);
       });
 
