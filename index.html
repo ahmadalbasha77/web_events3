@@ -164,6 +164,7 @@
       box-shadow: 0 8px 24px rgba(184,134,11,0.35);
       will-change: transform;
     }
+    #musicBtn[hidden] { display: none !important; }
     #musicBtn svg { width: 20px; height: 20px; }
     #musicBtn.is-muted { filter: grayscale(0.4); opacity: 0.85; }
     #musicBtn.is-hint { animation: musicHint 1.6s ease-in-out infinite; }
@@ -217,13 +218,17 @@
       font-weight: 400;
       position: relative;
       display: inline-block;
+      color: #C9A227;
       background: var(--frame);
       background-size: 220% 220%;
       -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent;
       filter: drop-shadow(0 1px 0 rgba(184,134,11,0.2));
     }
-    .names-script .amp { font-size: 0.62em; padding: 0 6px; opacity: 0.9; }
+    .names-script .amp {
+      font-size: 0.55em; padding: 0 10px; color: #B8860B;
+      -webkit-text-fill-color: #B8860B; vertical-align: 6px;
+    }
     .shimmer-mask {
       position: relative; display: inline-block;
     }
@@ -268,7 +273,7 @@
       transform-style: preserve-3d;
     }
     .env-card {
-      position: absolute; left: 8%; right: 8%; top: 18%;
+      position: absolute; left: 8%; right: 8%; top: 14%;
       height: 78%;
       background: var(--ivory);
       border: 1px solid rgba(201,162,39,0.35);
@@ -276,6 +281,7 @@
       gap: 4px; z-index: 2;
       will-change: transform;
       box-shadow: 0 8px 18px rgba(80,60,20,0.08);
+      opacity: 0;
     }
     .env-card .mini {
       font-family: "Aref Ruqaa", serif; color: var(--gold); font-size: 22px;
@@ -283,20 +289,32 @@
     .env-card .mini-en {
       font-family: "Great Vibes", cursive; color: var(--gold-deep); font-size: 20px; direction: ltr;
     }
-    .env-pocket {
-      position: absolute; inset: 36% 0 0;
-      background: linear-gradient(180deg, #F7F1E4 0%, #EDE3CE 100%);
-      clip-path: polygon(0 28%, 50% 0, 100% 28%, 100% 100%, 0 100%);
-      z-index: 4;
-      box-shadow: 0 -1px 0 rgba(201,162,39,0.28);
+    .env-side {
+      position: absolute; inset: 0; z-index: 5; pointer-events: none;
     }
-    .env-pocket::after {
+    .env-side.left {
+      background: linear-gradient(156deg, #F8F3E8 0%, #E8DCC4 100%);
+      clip-path: polygon(0 0, 0 100%, 50% 48%);
+    }
+    .env-side.right {
+      background: linear-gradient(204deg, #F8F3E8 0%, #E8DCC4 100%);
+      clip-path: polygon(100% 0, 100% 100%, 50% 48%);
+    }
+    .env-pocket {
+      position: absolute; inset: 40% 0 0;
+      background: linear-gradient(180deg, #F4EBDA 0%, #E8D9BE 100%);
+      clip-path: polygon(0 30%, 50% 0, 100% 30%, 100% 100%, 0 100%);
+      z-index: 4;
+    }
+    .env-pocket::before {
       content: "";
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(201,162,39,0.12), transparent 40%);
+      position: absolute; left: 0; right: 0; top: 0; height: 70%;
+      background:
+        linear-gradient(to bottom right, transparent 49.5%, rgba(184,134,11,0.35) 50%, transparent 52%),
+        linear-gradient(to bottom left, transparent 49.5%, rgba(184,134,11,0.35) 50%, transparent 52%);
     }
     .env-flap {
-      position: absolute; top: 0; left: 0; right: 0; height: 48%;
+      position: absolute; top: 0; left: 0; right: 0; height: 52%;
       transform-origin: top center;
       transform-style: preserve-3d;
       z-index: 6;
@@ -308,9 +326,12 @@
       -webkit-backface-visibility: hidden;
     }
     .flap-front {
-      background: linear-gradient(180deg, #FFFEFB, #F4ECD8);
+      background: linear-gradient(180deg, #FFFEFB 0%, #F0E4CC 100%);
       clip-path: polygon(0 0, 100% 0, 50% 100%);
-      filter: drop-shadow(0 8px 10px rgba(80,60,20,0.12));
+      filter: drop-shadow(0 10px 12px rgba(80,60,20,0.16));
+    }
+    .flap-front svg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
     }
     .flap-liner {
       background: var(--frame);
@@ -318,10 +339,15 @@
       transform: rotateX(180deg);
     }
     .env-seal {
-      position: absolute; left: 50%; top: 38%;
-      width: 72px; height: 72px; margin-left: -36px;
-      z-index: 8; transform: translateY(-18%);
+      position: absolute; left: 50%; top: 44%;
+      width: 78px; height: 78px; margin-left: -39px;
+      z-index: 8; transform: translateY(-42%);
+      filter: drop-shadow(0 6px 10px rgba(80,30,30,0.28));
+      border-radius: 50%;
+      overflow: hidden;
+      mix-blend-mode: multiply;
     }
+    .envelope.is-opening .env-seal { overflow: visible; mix-blend-mode: normal; }
     .seal-half {
       position: absolute; inset: 0;
       background: url("assets/wax-seal.webp") center / cover no-repeat;
@@ -420,6 +446,7 @@
       font-family: "Great Vibes", cursive;
       font-size: clamp(48px, 16vw, 76px);
       text-align: center; line-height: 1.05; direction: ltr;
+      color: #C9A227;
       background: var(--frame); -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -432,7 +459,6 @@
     .rings { width: 120px; margin: 12px auto 4px; display: block; }
     .couple-art {
       width: min(72%, 260px); margin: 10px auto 0;
-      mix-blend-mode: multiply;
     }
 
     .mono-wrap { text-align: center; margin-bottom: 10px; }
@@ -470,6 +496,7 @@
     }
     .ar-names .n {
       font-family: "Aref Ruqaa", serif; font-size: clamp(28px, 8vw, 36px);
+      color: #C9A227;
       background: var(--frame); -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -589,8 +616,7 @@
     .map-lock {
       position: absolute; inset: 0; z-index: 5;
       display: grid; place-items: center;
-      background: rgba(247,243,233,0.28);
-      backdrop-filter: blur(1px);
+      background: rgba(247,243,233,0.08);
       font-size: 13px; color: var(--ink); font-weight: 500;
     }
     .map-lock span {
@@ -664,6 +690,7 @@
     .finale-line {
       font-family: "Aref Ruqaa", serif;
       font-size: clamp(20px, 5.4vw, 26px);
+      color: #C9A227;
       background: var(--frame); -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent;
       line-height: 1.9; padding: 0 10px;
@@ -751,9 +778,15 @@
             <div class="mini" data-bind="mono"></div>
             <div class="mini-en" data-bind="namesEn"></div>
           </div>
+          <div class="env-side left"></div>
+          <div class="env-side right"></div>
           <div class="env-pocket"></div>
           <div class="env-flap" id="envFlap">
-            <div class="flap-face flap-front"></div>
+            <div class="flap-face flap-front">
+              <svg viewBox="0 0 100 50" preserveAspectRatio="none" fill="none" aria-hidden="true">
+                <polyline points="1,1 50,49 99,1" stroke="#C9A227" stroke-width="0.8" />
+              </svg>
+            </div>
             <div class="flap-face flap-liner"></div>
           </div>
           <div class="env-seal" id="envSeal">
@@ -1257,6 +1290,16 @@
             subdomains: "abcd",
             maxZoom: 19
           }).addTo(map);
+          let tilesOk = false;
+          map.eachLayer((ly) => {
+            if (ly.on) {
+              ly.on("load", () => { tilesOk = true; });
+              ly.on("tileerror", () => {});
+            }
+          });
+          setTimeout(() => { if (map) map.invalidateSize(); }, 80);
+          setTimeout(() => { if (map) map.invalidateSize(); }, 450);
+          setTimeout(() => { if (!tilesOk) fallback(); }, 2800);
           const icon = L.divIcon({ className: "venue-pin", html: pinHtml(), iconSize: [44, 44], iconAnchor: [22, 22] });
           const marker = L.marker([C.venue.lat, C.venue.lng], { icon }).addTo(map);
           if (!REDUCE && window.gsap) {
@@ -1270,11 +1313,16 @@
             map.dragging.enable();
             map.touchZoom.enable();
             map.doubleClickZoom.enable();
-            if (map.tap) map.tap.enable();
+            setTimeout(() => map.invalidateSize(), 50);
           });
+          let mapSized = false;
           document.addEventListener("scroll", () => {
             if (!map) return;
             const rec = $("#venue").getBoundingClientRect();
+            if (!mapSized && rec.top < innerHeight && rec.bottom > 0) {
+              map.invalidateSize();
+              mapSized = true;
+            }
             if (rec.bottom < 80 || rec.top > innerHeight - 80) {
               map.dragging.disable();
               map.touchZoom.disable();
@@ -1353,8 +1401,9 @@
           .to("#envSeal .left", { x: -46, rotation: -28, opacity: 0, duration: 0.55, ease: "power2.in" }, 0.12)
           .to("#envSeal .right", { x: 46, rotation: 28, opacity: 0, duration: 0.55, ease: "power2.in" }, 0.12)
           .to(flap, { rotateX: -180, duration: 1.15, ease: "power2.inOut" }, 0.35)
-          .set(card, { zIndex: 7 }, 1.1)
-          .to(card, { y: -168, scale: 1.12, duration: 1.05, ease: "lux" }, 1.05)
+          .to(card, { opacity: 1, duration: 0.25 }, 0.9)
+          .set(card, { zIndex: 7 }, 1.0)
+          .to(card, { y: -176, scale: 1.1, duration: 1.05, ease: "lux" }, 1.05)
           .add(burstPetals, 1.15)
           .to("#landing", { opacity: 0, duration: 0.85, ease: "power2.out" }, 1.85);
       }
@@ -1441,6 +1490,10 @@
       Promise.all([minWait, fonts]).then(() => {
         $("#preloader").classList.add("is-done");
         if (window.gsap && window.CustomEase) CustomEase.create("lux", "M0,0 C0.16,1 0.3,1 1,1");
+        if (/[?&]open=1(?:&|$)/.test(location.search)) {
+          opened = true;
+          finishOpen();
+        }
       });
     })();
   </script>
