@@ -612,7 +612,30 @@
     }
     .tl-title { font-size: 15px; color: var(--ink); font-weight: 500; }
 
-    .venue-caption { text-align: center; color: var(--muted); font-size: 14px; margin: 4px 0 16px; }
+    .venue-card {
+      text-align: center;
+      padding: 8px 8px 18px;
+    }
+    .venue-pin-ico {
+      width: 42px; height: 42px; margin: 0 auto 14px;
+      color: var(--gold);
+    }
+    .venue-name {
+      font-family: "Aref Ruqaa", serif;
+      font-size: clamp(26px, 7vw, 34px);
+      color: #7A5A0E;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .venue-rule {
+      display: block; width: 56px; height: 12px; margin: 0 auto 10px;
+      background:
+        linear-gradient(90deg, transparent, #C9A227 12%, #C9A227 88%, transparent) center / 100% 1px no-repeat,
+        radial-gradient(circle, #C9A227 1.4px, transparent 1.6px) center / 8px 8px no-repeat;
+    }
+    .venue-addr {
+      color: var(--muted); font-size: 15px; line-height: 1.7;
+    }
     .btn-ghost {
       display: block; width: min(100%, 280px); margin: 0 auto;
       text-align: center; text-decoration: none;
@@ -868,7 +891,16 @@
       <section class="section gold-frame reveal" id="venue">
         <svg class="draw-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><rect class="draw-rect" x="1" y="1" width="98" height="98" /></svg>
         <h2 class="en-heading reveal-child" data-bind="venueTitle"></h2>
-        <p class="venue-caption reveal-child"><span data-bind="venueName"></span> — <span data-bind="venueAddr"></span></p>
+        <div class="venue-card reveal-child">
+          <svg class="venue-pin-ico" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <circle cx="24" cy="24" r="23" stroke="url(#goldGrad)" stroke-width="1.2" />
+            <path d="M24 10c-5.5 0-10 4.3-10 9.6 0 7.2 10 17.4 10 17.4s10-10.2 10-17.4C34 14.3 29.5 10 24 10z" stroke="url(#goldGrad)" stroke-width="1.5" fill="rgba(201,162,39,0.08)" />
+            <circle cx="24" cy="19.5" r="3.2" fill="#C9A227" />
+          </svg>
+          <p class="venue-name" data-bind="venueName"></p>
+          <span class="venue-rule" aria-hidden="true"></span>
+          <p class="venue-addr" data-bind="venueAddr"></p>
+        </div>
         <a class="btn-ghost reveal-child" id="dirBtn" target="_blank" rel="noopener" data-bind="directions"></a>
       </section>
 
