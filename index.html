@@ -397,27 +397,12 @@
       transform: rotateX(180deg);
     }
     .env-seal {
-      position: absolute; left: 50%; top: 44%;
-      width: 78px; height: 78px; margin-left: -39px;
-      z-index: 8; transform: translateY(-42%);
-      filter: drop-shadow(0 6px 10px rgba(80,30,30,0.28));
-      border-radius: 50%;
-      overflow: hidden;
-      mix-blend-mode: multiply;
-    }
-    .envelope.is-opening .env-seal { overflow: visible; mix-blend-mode: normal; }
-    .seal-half {
-      position: absolute; inset: 0;
-      background: url("assets/wax-seal.webp") center / cover no-repeat;
-      will-change: transform;
-    }
-    .seal-half.left { clip-path: inset(0 50% 0 0); }
-    .seal-half.right { clip-path: inset(0 0 0 50%); }
-    .seal-crack {
-      position: absolute; left: 50%; top: 18%; bottom: 18%; width: 1px;
-      background: linear-gradient(180deg, transparent, rgba(60,20,20,0.0), transparent);
-      transform: translateX(-50%);
-      opacity: 0;
+      position: absolute; left: 50%; top: 28%;
+      width: 72px; height: 72px; margin-left: -36px;
+      z-index: 8;
+      object-fit: contain;
+      filter: drop-shadow(0 7px 12px rgba(32,6,10,0.42));
+      pointer-events: none;
     }
     .env-roses {
       position: absolute; right: -6px; top: 10px;
@@ -911,11 +896,7 @@
             </div>
             <div class="flap-face flap-liner"></div>
           </div>
-          <div class="env-seal" id="envSeal">
-            <div class="seal-half left"></div>
-            <div class="seal-half right"></div>
-            <div class="seal-crack"></div>
-          </div>
+          <img class="env-seal" id="envSeal" src="assets/wax-seal.webp" alt="">
           <img class="env-roses" src="assets/burgundy-florals.webp" alt="" />
         </div>
       </div>
@@ -1384,19 +1365,17 @@
           finishOpen(); return;
         }
         const tl = gsap.timeline({ onComplete: finishOpen });
-        tl.to(btn, { opacity: 0, y: 10, duration: 0.32, ease: "power2.out" }, 0)
-          .to(".seal-crack", { opacity: 0.8, duration: 0.2 }, 0.1)
-          .to("#envSeal .left", { x: -20, y: 10, rotation: -12, opacity: 0, duration: 0.7, ease: "power2.inOut" }, 0.2)
-          .to("#envSeal .right", { x: 20, y: 10, rotation: 12, opacity: 0, duration: 0.7, ease: "power2.inOut" }, 0.2)
-          .to(".env-roses", { opacity: 0.18, y: 8, duration: 0.55, ease: "power2.out" }, 0.28)
-          .to(flap, { rotateX: -172, duration: 1.4, ease: "power2.inOut" }, 0.38)
-          .to(card, { opacity: 1, duration: 0.4, ease: "power1.out" }, 0.95)
-          .set(card, { zIndex: 7 }, 1.08)
-          .to(card, { y: -118, duration: 1.2, ease: "lux" }, 1.1)
-          .add(burstPetals, 1.28)
-          .add(() => { $("#invite").classList.add("is-on"); }, 1.7)
-          .to(".kicker, .names-script, .landing-rule, .landing-corner", { opacity: 0, duration: 0.5, ease: "power2.out" }, 1.55)
-          .to("#landing", { opacity: 0, duration: 0.9, ease: "power2.inOut" }, 1.95);
+        tl.to(btn, { opacity: 0, y: 8, duration: 0.28, ease: "power2.out" }, 0)
+          .to("#envSeal", { y: -16, scale: 0.84, opacity: 0, duration: 0.55, ease: "power2.inOut" }, 0.06)
+          .to(".env-roses", { opacity: 0.12, duration: 0.45, ease: "power2.out" }, 0.16)
+          .to(flap, { rotateX: -160, duration: 1.45, ease: "power2.inOut" }, 0.28)
+          .to(card, { opacity: 1, duration: 0.5, ease: "power1.out" }, 0.92)
+          .set(card, { zIndex: 7 }, 1.05)
+          .to(card, { y: -92, duration: 1.15, ease: "lux" }, 1.08)
+          .add(burstPetals, 1.22)
+          .add(() => { $("#invite").classList.add("is-on"); }, 1.75)
+          .to(".kicker, .names-script, .landing-rule, .landing-corner", { opacity: 0, duration: 0.5, ease: "power2.out" }, 1.58)
+          .to("#landing", { opacity: 0, duration: 0.9, ease: "power2.inOut" }, 1.98);
       }
 
       function finishOpen() {
