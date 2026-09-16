@@ -152,12 +152,15 @@
     .pre-mono svg.ring { position: absolute; inset: 0; animation: spin 2.8s linear infinite; }
     .pre-letters {
       font-family: "Great Vibes", cursive;
-      font-size: 32px; line-height: 1;
+      line-height: 1;
       direction: ltr;
+      display: flex; align-items: baseline; justify-content: center; gap: 4px;
       background: var(--frame);
       -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+    .pre-letters .amp { font-size: 16px; }
+    .pre-letters .letter { font-size: 34px; }
     .pre-sub {
       margin-top: 18px; text-align: center;
       font-family: "Great Vibes", cursive; font-size: 26px; color: var(--gold);
@@ -828,7 +831,11 @@
         <svg class="ring" viewBox="0 0 108 108" fill="none" aria-hidden="true">
           <circle cx="54" cy="54" r="50" stroke="#C9A227" stroke-width="1.2" stroke-dasharray="40 220" />
         </svg>
-        <span class="pre-letters" data-bind="mono"></span>
+        <span class="pre-letters" dir="ltr">
+          <span class="letter" data-bind="monoA">M</span>
+          <span class="amp">&amp;</span>
+          <span class="letter" data-bind="monoB">S</span>
+        </span>
       </div>
       <div class="pre-sub" data-bind="namesEn"></div>
     </div>
@@ -856,7 +863,7 @@
       <div class="envelope" id="envelope">
         <div class="env-body">
           <div class="env-card" id="envCard">
-            <div class="mini" data-bind="mono"></div>
+            <div class="mini" dir="ltr" data-bind="mono">M &amp; S</div>
             <div class="mini-en" data-bind="namesEn"></div>
           </div>
           <div class="env-side left"></div>
