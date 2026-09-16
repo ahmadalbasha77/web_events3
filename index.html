@@ -70,6 +70,8 @@
   <link rel="canonical" href="https://super-pudding-dfa61e.netlify.app/" />
   <meta name="description" content="يتشرّف الحاج حازم أبو قبع بدعوتكم لحضور حفل خطوبة ابنه مجد وسيلين · السبت ٢٦ سبتمبر ٢٠٢٦ · قاعات البسمه للاحتفالات" />
   <meta name="theme-color" content="#6E2230" />
+  <meta name="color-scheme" content="light only" />
+  <meta name="supported-color-schemes" content="light" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta property="og:type" content="website" />
@@ -112,10 +114,16 @@
       --frame: linear-gradient(135deg, #D4B36A, #9A7430, #E8D5A3);
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bot: env(safe-area-inset-bottom, 0px);
+      color-scheme: only light;
+      forced-color-adjust: none;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { background: var(--ivory); color: var(--ink); }
+    html, body {
+      background: var(--ivory); color: var(--ink);
+      color-scheme: only light;
+      forced-color-adjust: none;
+    }
     html { scroll-behavior: smooth; }
     html.is-locked, html.is-locked body { overflow: hidden; height: 100%; }
     body {
@@ -812,6 +820,55 @@
     @media (min-width: 720px) {
       .section { padding: 48px 36px 52px; margin: 36px 0; }
       .count-unit .window { height: 76px; font-size: 58px; line-height: 76px; }
+    }
+
+    /* Phone dark mode (Samsung/Chrome) must not invert the invitation.
+       These rules only run in dark; the light look stays the same. */
+    @media (prefers-color-scheme: dark) {
+      :root, html, body {
+        color-scheme: only light;
+        forced-color-adjust: none;
+      }
+      html, body {
+        background: #F6EEE6 !important;
+        color: #2C1519 !important;
+      }
+      body {
+        background-color: #F6EEE6 !important;
+        background-image:
+          radial-gradient(ellipse at 20% 10%, rgba(110,34,48,0.10), transparent 50%),
+          radial-gradient(ellipse at 80% 90%, rgba(154,116,48,0.08), transparent 46%) !important;
+      }
+      #preloader,
+      #landing,
+      #invite {
+        background-color: #F6EEE6 !important;
+        color: #2C1519 !important;
+      }
+      .landing-sheet {
+        background: #F6EEE6 !important;
+        box-shadow:
+          inset 0 0 0 7px #F6EEE6,
+          inset 0 0 0 8px rgba(154,116,48,0.55),
+          0 18px 40px rgba(74,21,32,0.10) !important;
+      }
+      .gold-frame {
+        background: #FFF8F3 !important;
+      }
+      .env-card,
+      .btn-ghost,
+      .btn-line {
+        background: #FFF8F3 !important;
+        color: #2C1519 !important;
+      }
+      .pe-shot { background: #fff !important; }
+      .env-seal {
+        background: #6E2230 !important;
+        border-radius: 50%;
+      }
+      img, svg, canvas, video {
+        filter: none !important;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
