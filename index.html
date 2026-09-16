@@ -181,7 +181,7 @@
     #landing {
       position: fixed; inset: 0; z-index: 50;
       display: flex; align-items: center; justify-content: center;
-      padding: calc(12px + var(--safe-top)) 12px calc(12px + var(--safe-bot));
+      padding: calc(16px + var(--safe-top)) 14px calc(16px + var(--safe-bot));
       background-color: var(--ivory);
       background-image:
         url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E"),
@@ -194,31 +194,46 @@
     }
     .landing-sheet {
       position: relative;
-      width: min(100%, 420px);
+      width: min(100%, 400px);
       display: flex; flex-direction: column; align-items: center;
       justify-content: center;
-      padding: 18px 10px 20px;
+      padding: 30px 22px 28px;
+      border: 1px solid rgba(201,162,39,0.62);
+      box-shadow:
+        inset 0 0 0 7px var(--ivory),
+        inset 0 0 0 8px rgba(201,162,39,0.5),
+        0 18px 40px rgba(80,60,20,0.08);
+      background: rgba(255,254,251,0.28);
     }
-    .landing-corner { display: none; }
+    .landing-corner {
+      position: absolute; width: 42px; height: 42px; color: var(--gold); opacity: 0.85;
+      pointer-events: none;
+    }
+    .landing-corner.tl { top: 10px; right: 10px; }
+    .landing-corner.tr { top: 10px; left: 10px; transform: scaleX(-1); }
+    .landing-corner.bl { bottom: 10px; right: 10px; transform: scaleY(-1); }
+    .landing-corner.br { bottom: 10px; left: 10px; transform: scale(-1); }
     .kicker {
-      font-family: "Amiri", serif;
-      font-size: clamp(15px, 3.6vw, 18px);
-      letter-spacing: 0.08em;
-      color: var(--gold-deep);
-      direction: rtl;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(10px, 2.7vw, 12px);
+      letter-spacing: 0.38em;
+      text-indent: 0.38em;
+      color: var(--muted);
+      text-transform: uppercase;
+      direction: ltr;
       text-align: center;
-      font-weight: 400;
-      margin-bottom: 2px;
+      font-weight: 500;
+      margin-bottom: 4px;
     }
     .landing-rule {
-      display: block; width: 72px; height: 14px; margin: 6px 0 4px;
+      display: block; width: 72px; height: 14px; margin: 8px 0 6px;
       background:
-        linear-gradient(90deg, transparent, var(--gold) 12%, var(--gold) 88%, transparent) center / 100% 1px no-repeat,
-        radial-gradient(circle, var(--gold) 1.5px, transparent 1.7px) center / 8px 8px no-repeat;
+        linear-gradient(90deg, transparent, #C9A227 12%, #C9A227 88%, transparent) center / 100% 1px no-repeat,
+        radial-gradient(circle, #C9A227 1.5px, transparent 1.7px) center / 8px 8px no-repeat;
     }
     .names-script {
       font-family: "Great Vibes", cursive;
-      font-size: clamp(52px, 15vw, 78px);
+      font-size: clamp(58px, 17vw, 86px);
       line-height: 0.9;
       direction: ltr;
       text-align: center;
@@ -238,14 +253,14 @@
       font-size: 0.36em;
       line-height: 1;
       padding: 4px 0 8px;
-      color: var(--gold);
+      color: #C9A227;
       -webkit-text-stroke: 0;
       text-shadow: none;
       letter-spacing: 0;
     }
     .shimmer-mask {
       position: relative; display: block; width: 100%;
-      margin: 0 0 4px;
+      margin: 2px 0 10px;
     }
     .shimmer-mask::after {
       content: "";
@@ -262,78 +277,110 @@
     }
 
     .env-stage {
-      width: min(92vw, 370px);
-      margin: 4px 0 2px;
+      perspective: 1400px;
+      margin: 8px 0 4px;
     }
     .envelope {
-      width: 100%;
-      height: 430px;
+      width: min(78vw, 300px);
+      height: 196px;
       position: relative;
+      transform-style: preserve-3d;
       will-change: transform;
-      animation: floatY 4s ease-in-out infinite;
+      animation: floatY 3s ease-in-out infinite;
     }
     .envelope.is-opening { animation: none; }
     @keyframes floatY {
       0%, 100% { transform: translate3d(0, 0, 0); }
-      50% { transform: translate3d(0, -7px, 0); }
+      50% { transform: translate3d(0, -8px, 0); }
     }
-    .env-liner {
-      position: absolute;
-      left: 7%; right: 7%;
-      top: 14%;
-      height: 62%;
-      background:
-        radial-gradient(ellipse at 50% 18%, rgba(141,53,66,0.45), transparent 58%),
-        linear-gradient(180deg, #5C1A26 0%, #3A1018 100%);
-      clip-path: polygon(0 40%, 50% 0, 100% 40%, 100% 100%, 0 100%);
-      z-index: 1;
-      box-shadow: inset 0 12px 28px rgba(0,0,0,0.22);
-    }
-    .env-photo-wrap {
-      position: absolute;
-      width: 58%;
-      left: 28%;
-      top: 4%;
-      z-index: 3;
-      transform: rotate(-8deg);
-      background: #fff;
-      padding: 7px 7px 20px;
+    .env-body {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, #FFFEFB 0%, #F3EBDA 100%);
+      border: 1px solid rgba(201,162,39,0.5);
+      border-radius: 2px 2px 8px 8px;
       box-shadow:
-        0 18px 34px rgba(42,10,16,0.28),
-        0 2px 0 rgba(255,255,255,0.9);
-      will-change: transform;
+        0 20px 36px rgba(80,60,20,0.14),
+        inset 0 0 0 3px #FFFEFB,
+        inset 0 0 0 4px rgba(201,162,39,0.28);
+      overflow: visible;
+      transform-style: preserve-3d;
     }
-    .env-photo {
-      width: 100%;
-      height: 228px;
-      object-fit: cover;
-      object-position: center 12%;
-      display: block;
+    .env-card {
+      position: absolute; left: 8%; right: 8%; top: 14%;
+      height: 78%;
+      background: var(--ivory);
+      border: 1px solid rgba(201,162,39,0.35);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 4px; z-index: 2;
+      will-change: transform;
+      box-shadow: 0 8px 18px rgba(80,60,20,0.08);
+      opacity: 0;
+    }
+    .env-card .mini {
+      font-family: "Aref Ruqaa", serif; color: var(--gold); font-size: 22px;
+    }
+    .env-card .mini-en {
+      font-family: "Great Vibes", cursive; color: var(--gold-deep); font-size: 20px; direction: ltr;
+    }
+    .env-side {
+      position: absolute; inset: 0; z-index: 5; pointer-events: none;
+    }
+    .env-side.left {
+      background: linear-gradient(156deg, #F8F3E8 0%, #E8DCC4 100%);
+      clip-path: polygon(0 0, 0 100%, 50% 48%);
+    }
+    .env-side.right {
+      background: linear-gradient(204deg, #F8F3E8 0%, #E8DCC4 100%);
+      clip-path: polygon(100% 0, 100% 100%, 50% 48%);
     }
     .env-pocket {
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      height: 47%;
-      background:
-        linear-gradient(180deg, #7E2836 0%, #5E1C28 58%, #45141E 100%);
-      clip-path: polygon(0 26%, 50% 0, 100% 26%, 100% 100%, 0 100%);
-      z-index: 5;
-      filter: drop-shadow(0 16px 22px rgba(42,10,16,0.28));
+      position: absolute; inset: 40% 0 0;
+      background: linear-gradient(180deg, #F4EBDA 0%, #E8D9BE 100%);
+      clip-path: polygon(0 30%, 50% 0, 100% 30%, 100% 100%, 0 100%);
+      z-index: 4;
     }
-    .env-pocket::after {
+    .env-pocket::before {
       content: "";
+      position: absolute; left: 0; right: 0; top: 0; height: 70%;
+      background:
+        linear-gradient(to bottom right, transparent 49.5%, rgba(184,134,11,0.35) 50%, transparent 52%),
+        linear-gradient(to bottom left, transparent 49.5%, rgba(184,134,11,0.35) 50%, transparent 52%);
+    }
+    .env-flap {
+      position: absolute; top: 0; left: 0; right: 0; height: 52%;
+      transform-origin: top center;
+      transform-style: preserve-3d;
+      z-index: 6;
+      will-change: transform;
+    }
+    .flap-face {
       position: absolute; inset: 0;
-      background: linear-gradient(145deg, rgba(255,255,255,0.12), transparent 42%);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .flap-front {
+      background: linear-gradient(180deg, #FFFEFB 0%, #F0E4CC 100%);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      filter: drop-shadow(0 10px 12px rgba(80,60,20,0.16));
+    }
+    .flap-front svg {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+    }
+    .flap-liner {
+      background: var(--frame);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform: rotateX(180deg);
     }
     .env-seal {
-      position: absolute; left: 50%; top: 56%;
-      width: 74px; height: 74px; margin-left: -37px;
-      z-index: 8; transform: translateY(-8%);
-      filter: drop-shadow(0 8px 12px rgba(40,8,14,0.38));
+      position: absolute; left: 50%; top: 44%;
+      width: 78px; height: 78px; margin-left: -39px;
+      z-index: 8; transform: translateY(-42%);
+      filter: drop-shadow(0 6px 10px rgba(80,30,30,0.28));
       border-radius: 50%;
       overflow: hidden;
+      mix-blend-mode: multiply;
     }
-    .envelope.is-opening .env-seal { overflow: visible; }
+    .envelope.is-opening .env-seal { overflow: visible; mix-blend-mode: normal; }
     .seal-half {
       position: absolute; inset: 0;
       background: url("assets/wax-seal.webp") center / cover no-repeat;
@@ -347,35 +394,35 @@
       transform: translateX(-50%);
       opacity: 0;
     }
-    .env-florals {
-      position: absolute; left: -18%; top: 0;
-      width: 62%; z-index: 7; pointer-events: none;
-      mix-blend-mode: multiply;
+    .env-roses {
+      position: absolute; right: -14px; top: -18px;
+      width: 92px; z-index: 9; pointer-events: none;
+      mix-blend-mode: multiply; opacity: 0.95;
+      transform: rotate(8deg);
     }
 
     .open-btn {
-      margin-top: 10px;
-      font-family: "Tajawal", sans-serif;
-      letter-spacing: 0.04em;
-      font-size: 15px;
+      margin-top: 18px;
+      font-family: "Cormorant Garamond", serif;
+      letter-spacing: 0.34em;
+      text-indent: 0.34em;
+      font-size: 11px;
       font-weight: 500;
-      padding: 12px 28px;
-      color: #fff;
+      text-transform: uppercase;
+      direction: ltr;
+      padding: 12px 26px;
+      color: #6a5416;
       border-radius: 999px;
-      background: var(--burgundy);
+      background: transparent;
       border: 1px solid var(--gold);
-      box-shadow: 0 10px 22px rgba(74,21,32,0.28);
+      box-shadow:
+        inset 0 0 0 4px rgba(247,243,233,0.95),
+        inset 0 0 0 5px rgba(201,162,39,0.55);
       animation: btnPulse 3.2s ease-in-out infinite;
     }
     @keyframes btnPulse {
-      0%, 100% { box-shadow: 0 10px 22px rgba(74,21,32,0.28), 0 0 0 0 rgba(110,34,48,0.28); }
-      70% { box-shadow: 0 10px 22px rgba(74,21,32,0.28), 0 0 0 8px rgba(110,34,48,0); }
-    }
-    @media (max-height: 740px) {
-      .names-script { font-size: clamp(40px, 12vw, 58px); }
-      .envelope { height: 360px; }
-      .env-photo { height: 176px; }
-      .env-photo-wrap { top: 2%; }
+      0%, 100% { box-shadow: inset 0 0 0 4px rgba(247,243,233,0.95), inset 0 0 0 5px rgba(201,162,39,0.55), 0 0 0 0 rgba(201,162,39,0.28); }
+      70% { box-shadow: inset 0 0 0 4px rgba(247,243,233,0.95), inset 0 0 0 5px rgba(201,162,39,0.55), 0 0 0 8px rgba(201,162,39,0); }
     }
 
     #petals, #petals-bg {
@@ -734,17 +781,29 @@
 
     <div class="env-stage">
       <div class="envelope" id="envelope">
-        <div class="env-liner" aria-hidden="true"></div>
-        <div class="env-photo-wrap" id="envCard">
-          <img class="env-photo" src="assets/groom.jpg" alt="مجد">
+        <div class="env-body">
+          <div class="env-card" id="envCard">
+            <div class="mini" data-bind="mono"></div>
+            <div class="mini-en" data-bind="namesEn"></div>
+          </div>
+          <div class="env-side left"></div>
+          <div class="env-side right"></div>
+          <div class="env-pocket"></div>
+          <div class="env-flap" id="envFlap">
+            <div class="flap-face flap-front">
+              <svg viewBox="0 0 100 50" preserveAspectRatio="none" fill="none" aria-hidden="true">
+                <polyline points="1,1 50,49 99,1" stroke="#C9A227" stroke-width="0.8" />
+              </svg>
+            </div>
+            <div class="flap-face flap-liner"></div>
+          </div>
+          <div class="env-seal" id="envSeal">
+            <div class="seal-half left"></div>
+            <div class="seal-half right"></div>
+            <div class="seal-crack"></div>
+          </div>
+          <img class="env-roses" src="assets/white-roses.webp" alt="" />
         </div>
-        <div class="env-pocket" aria-hidden="true"></div>
-        <div class="env-seal" id="envSeal">
-          <div class="seal-half left"></div>
-          <div class="seal-half right"></div>
-          <div class="seal-crack"></div>
-        </div>
-        <img class="env-florals" src="assets/burgundy-florals.webp" alt="">
       </div>
     </div>
 
@@ -1161,6 +1220,7 @@
 
       /* ── Envelope open ── */
       const envelope = $("#envelope");
+      const flap = $("#envFlap");
       const card = $("#envCard");
       let opened = false;
       $("#openBtn").addEventListener("click", openEnvelope);
@@ -1173,12 +1233,15 @@
           finishOpen(); return;
         }
         const tl = gsap.timeline({ onComplete: finishOpen });
-        tl.to(".seal-crack", { opacity: 1, duration: 0.12 })
-          .to("#envSeal .left", { x: -50, rotation: -26, opacity: 0, duration: 0.5, ease: "power2.in" }, 0.1)
-          .to("#envSeal .right", { x: 50, rotation: 26, opacity: 0, duration: 0.5, ease: "power2.in" }, 0.1)
-          .to(card, { y: -36, scale: 1.06, rotate: -4, duration: 0.85, ease: "lux" }, 0.28)
-          .add(burstPetals, 0.4)
-          .to("#landing", { opacity: 0, duration: 0.8, ease: "power2.out" }, 1.05);
+        tl.to(".seal-crack", { opacity: 1, duration: 0.15 })
+          .to("#envSeal .left", { x: -46, rotation: -28, opacity: 0, duration: 0.55, ease: "power2.in" }, 0.12)
+          .to("#envSeal .right", { x: 46, rotation: 28, opacity: 0, duration: 0.55, ease: "power2.in" }, 0.12)
+          .to(flap, { rotateX: -180, duration: 1.15, ease: "power2.inOut" }, 0.35)
+          .to(card, { opacity: 1, duration: 0.25 }, 0.9)
+          .set(card, { zIndex: 7 }, 1.0)
+          .to(card, { y: -176, scale: 1.1, duration: 1.05, ease: "lux" }, 1.05)
+          .add(burstPetals, 1.15)
+          .to("#landing", { opacity: 0, duration: 0.85, ease: "power2.out" }, 1.85);
       }
 
       function finishOpen() {
