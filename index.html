@@ -8,7 +8,7 @@
        CONFIG — عدّل كل بيانات الدعوة من هنا فقط
        ══════════════════════════════════════════════════════════════ */
     window.CONFIG = {
-      siteUrl: "", // مثال: "https://your-domain.com" لصورة واتساب المطلقة
+      siteUrl: "https://super-pudding-dfa61e.netlify.app",
       couple: {
         groom: { titleAr: "", nameAr: "مجد", nameEn: "Majd", familyAr: "" },
         bride: { titleAr: "", nameAr: "سيسي", nameEn: "Cecy", familyAr: "" },
@@ -56,7 +56,7 @@
         rsvp: "تأكيد الحضور عبر واتساب",
         calendar: "إضافة الموعد إلى التقويم",
         share: "مشاركة الدعوة",
-        shareText: "دعوة جاهة Majd و Cecy — يسعدنا حضوركم",
+        shareText: "دعوة إلى حفل جاهة مجد وسيسي — السبت ٢٦ سبتمبر ٢٠٢٦، قاعات البسمه للاحتفالات",
         finale: "وَبِحُضورِكُم يَتِمُّ لَنا الفَرَحُ وَالسُّرور",
         timeLabel: "الوقت",
         dateLabel: "اليوم والتاريخ",
@@ -64,23 +64,29 @@
       }
     };
   </script>
-  <title>Majd &amp; Cecy — دعوة جاهة</title>
-  <meta name="description" content="يسعدنا دعوتكم لحضور حفل جاهة مجد وسيسي" />
+  <title>دعوة جاهة مجد وسيسي</title>
+  <link rel="canonical" href="https://super-pudding-dfa61e.netlify.app/" />
+  <meta name="description" content="السبت ٢٦ سبتمبر ٢٠٢٦ · ٨:٣٠ مساءً · قاعات البسمه للاحتفالات — الزرقاء" />
   <meta name="theme-color" content="#F7F3E9" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Majd &amp; Cecy — دعوة جاهة" />
-  <meta property="og:description" content="يسعدنا دعوتكم لحضور حفل الجاهة" />
-  <meta property="og:image" content="assets/og.jpg" />
+  <meta property="og:url" content="https://super-pudding-dfa61e.netlify.app/" />
+  <meta property="og:site_name" content="دعوة جاهة" />
+  <meta property="og:title" content="دعوة جاهة مجد وسيسي" />
+  <meta property="og:description" content="السبت ٢٦ سبتمبر ٢٠٢٦ · ٨:٣٠ مساءً · قاعات البسمه للاحتفالات — الزرقاء" />
+  <meta property="og:image" content="https://super-pudding-dfa61e.netlify.app/assets/invite-og.jpg" />
+  <meta property="og:image:secure_url" content="https://super-pudding-dfa61e.netlify.app/assets/invite-og.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="دعوة جاهة مجد وسيسي — السبت ٢٦ سبتمبر ٢٠٢٦" />
   <meta property="og:locale" content="ar_AR" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Majd &amp; Cecy — دعوة جاهة" />
-  <meta name="twitter:description" content="يسعدنا دعوتكم لحضور حفل الجاهة" />
-  <meta name="twitter:image" content="assets/og.jpg" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%23F7F3E9' width='64' height='64' rx='12'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='22' fill='%23C9A227' font-family='serif'%3Eأ ل%3C/text%3E%3C/svg%3E" />
+  <meta name="twitter:title" content="دعوة جاهة مجد وسيسي" />
+  <meta name="twitter:description" content="السبت ٢٦ سبتمبر ٢٠٢٦ · ٨:٣٠ مساءً · قاعات البسمه للاحتفالات — الزرقاء" />
+  <meta name="twitter:image" content="https://super-pudding-dfa61e.netlify.app/assets/invite-og.jpg" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%23F7F3E9' width='64' height='64' rx='12'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='22' fill='%23C9A227' font-family='serif'%3Eم س%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet" />
@@ -1000,15 +1006,16 @@
 
       /* Open Graph absolute URL if provided */
       if (C.siteUrl) {
-        const abs = C.siteUrl.replace(/\/$/, "") + "/assets/og.jpg";
-        document.querySelectorAll('meta[property="og:image"], meta[name="twitter:image"]').forEach((m) => m.setAttribute("content", abs));
+        const origin = C.siteUrl.replace(/\/$/, "");
+        const abs = origin + "/assets/invite-og.jpg";
+        document.querySelectorAll('meta[property="og:image"], meta[property="og:image:secure_url"], meta[name="twitter:image"]').forEach((m) => m.setAttribute("content", abs));
         let url = document.querySelector('meta[property="og:url"]');
         if (!url) {
           url = document.createElement("meta");
           url.setAttribute("property", "og:url");
           document.head.appendChild(url);
         }
-        url.setAttribute("content", C.siteUrl);
+        url.setAttribute("content", origin + "/");
       }
 
       const verseEl = $("#verse");
@@ -1027,7 +1034,7 @@
       $("#dirBtn").href = C.venue.mapsUrl || ("https://www.google.com/maps/dir/?api=1&destination=" + C.venue.lat + "," + C.venue.lng);
       /* $("#waBtn").href = "https://wa.me/" + C.whatsapp.number + "?text=" + encodeURIComponent(C.whatsapp.message); */
 
-      document.title = C.couple.groom.nameEn + " & " + C.couple.bride.nameEn + " — دعوة جاهة";
+      document.title = "دعوة جاهة " + C.couple.groom.nameAr + " و" + C.couple.bride.nameAr;
 
       /* ── Petals ── */
       const burstCanvas = $("#petals");
