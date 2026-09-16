@@ -317,7 +317,7 @@
       animation: floatY 3.6s ease-in-out infinite;
       cursor: pointer;
     }
-    .envelope.is-opening { animation: none; }
+    .envelope.is-opening { animation: none; pointer-events: none; }
     @keyframes floatY {
       0%, 100% { transform: translate3d(0, 0, 0); }
       50% { transform: translate3d(0, -5px, 0); }
