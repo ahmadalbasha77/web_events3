@@ -542,12 +542,18 @@
       letter-spacing: 0.08em; margin-bottom: 4px;
     }
     .cover-names {
-      font-family: "Aref Ruqaa", serif;
-      font-size: clamp(40px, 12vw, 58px);
-      text-align: center; line-height: 1.35; direction: rtl;
+      font-family: "Great Vibes", cursive;
+      font-size: clamp(46px, 13vw, 64px);
+      text-align: center; line-height: 0.95; direction: ltr;
+      display: flex; flex-direction: column; align-items: center;
       color: #C9A227;
       background: var(--frame); -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent;
+    }
+    .cover-names .amp {
+      font-size: 0.4em;
+      line-height: 1;
+      padding: 4px 0 6px;
     }
     .getting {
       font-family: "Aref Ruqaa", serif;
@@ -907,7 +913,9 @@
 
         <p class="groom-title reveal-child" data-bind="groomTitle"></p>
         <h2 class="cover-names reveal-child">
-          <span data-bind="groomAr"></span><br /><span data-bind="brideAr"></span>
+          <span data-bind="groomEn"></span>
+          <span class="amp">&amp;</span>
+          <span data-bind="brideEn"></span>
         </h2>
         <svg class="rings reveal-child" viewBox="0 0 160 72" fill="none" aria-hidden="true">
           <ellipse cx="62" cy="38" rx="26" ry="26" stroke="url(#goldGrad)" stroke-width="2.4" />
