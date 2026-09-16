@@ -542,11 +542,11 @@
     .heart-gold { width: 24px; height: 24px; }
     .inshallah {
       font-family: "Amiri", serif; text-align: center;
-      font-size: 16px; color: var(--muted); margin: 6px 0 4px;
+      font-size: 16px; color: var(--muted); margin: 6px 0 18px;
     }
     .blessing {
       font-family: "Amiri", serif; text-align: center;
-      font-size: 16px; color: var(--ink); margin: 10px 16px 16px;
+      font-size: 16px; color: var(--ink); margin: 18px 16px 0;
       line-height: 1.95;
     }
     .meta-row {
@@ -861,7 +861,6 @@
           <span class="n" data-bind="brideAr"></span>
         </div>
         <p class="inshallah reveal-child" data-bind="inshallah"></p>
-        <p class="blessing reveal-child" data-bind="blessing"></p>
         <div class="meta-row reveal-child">
           <div class="meta-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/></svg>
@@ -881,6 +880,7 @@
             <div class="val" data-bind="venueName"></div>
           </div>
         </div>
+        <p class="blessing reveal-child" data-bind="blessing"></p>
       </section>
 
       <!-- Countdown -->
