@@ -907,7 +907,7 @@
         <a class="btn-ghost reveal-child" id="dirBtn" target="_blank" rel="noopener" data-bind="directions"></a>
       </section>
 
-      <!-- Actions -->
+      <!-- Actions
       <section class="section gold-frame reveal" id="actions">
         <svg class="draw-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><rect class="draw-rect" x="1" y="1" width="98" height="98" /></svg>
         <div class="actions">
@@ -925,6 +925,7 @@
           </button>
         </div>
       </section>
+      -->
 
       <!-- Finale -->
       <section class="section gold-frame finale reveal" id="finale">
@@ -1024,7 +1025,7 @@
       */
 
       $("#dirBtn").href = C.venue.mapsUrl || ("https://www.google.com/maps/dir/?api=1&destination=" + C.venue.lat + "," + C.venue.lng);
-      $("#waBtn").href = "https://wa.me/" + C.whatsapp.number + "?text=" + encodeURIComponent(C.whatsapp.message);
+      /* $("#waBtn").href = "https://wa.me/" + C.whatsapp.number + "?text=" + encodeURIComponent(C.whatsapp.message); */
 
       document.title = C.couple.groom.nameEn + " & " + C.couple.bride.nameEn + " — دعوة جاهة";
 
@@ -1149,6 +1150,7 @@
       function icsStamp(d) {
         return new Date(d).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
       }
+      /* Actions buttons — commented out
       $("#calBtn").addEventListener("click", () => {
         const start = new Date(C.datetime);
         const end = new Date(start.getTime() + 2 * 3600000);
@@ -1185,6 +1187,7 @@
           toast(location.href);
         }
       });
+      */
       function toast(msg) {
         const t = $("#toast"); t.textContent = msg; t.classList.add("is-on");
         setTimeout(() => t.classList.remove("is-on"), 2200);
