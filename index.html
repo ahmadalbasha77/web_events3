@@ -12,7 +12,7 @@
       couple: {
         groom: { titleAr: "", nameAr: "مجد", nameEn: "Majd", familyAr: "أبو قبع" },
         bride: { titleAr: "", nameAr: "سيلين", nameEn: "Cecy", familyAr: "" },
-        monogram: { a: "م", b: "س" }
+        monogram: { a: "M", b: "S" }
       },
       parents: {
         host: "الحاج حازم أبو قبع",
@@ -88,7 +88,7 @@
   <meta name="twitter:title" content="دعوة إلى حفل خطوبة مجد وسيلين" />
   <meta name="twitter:description" content="يتشرّف الحاج حازم أبو قبع بدعوتكم · السبت ٢٦ سبتمبر ٢٠٢٦ · ٨:٣٠ مساءً · قاعات البسمه للاحتفالات" />
   <meta name="twitter:image" content="https://super-pudding-dfa61e.netlify.app/assets/og-khitba.jpg" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%236E2230' width='64' height='64' rx='12'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='22' fill='%23C4A15A' font-family='serif'%3Eم س%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect fill='%236E2230' width='64' height='64' rx='12'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-size='20' fill='%23C4A15A' font-family='serif'%3EM%26S%3C/text%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Great+Vibes&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet" />
@@ -151,8 +151,9 @@
     }
     .pre-mono svg.ring { position: absolute; inset: 0; animation: spin 2.8s linear infinite; }
     .pre-letters {
-      font-family: "Aref Ruqaa", serif;
-      font-size: 34px; line-height: 1;
+      font-family: "Great Vibes", cursive;
+      font-size: 32px; line-height: 1;
+      direction: ltr;
       background: var(--frame);
       -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -317,7 +318,7 @@
       opacity: 0;
     }
     .env-card .mini {
-      font-family: "Aref Ruqaa", serif; color: var(--gold); font-size: 22px;
+      font-family: "Great Vibes", cursive; color: var(--gold); font-size: 26px; direction: ltr;
     }
     .env-card .mini-en {
       font-family: "Great Vibes", cursive; color: var(--gold-deep); font-size: 20px; direction: ltr;
@@ -565,11 +566,14 @@
 
     .mono-wrap { text-align: center; margin-bottom: 10px; }
     .mono-big {
-      font-family: "Aref Ruqaa", serif; font-size: 42px;
+      display: flex; align-items: baseline; justify-content: center;
+      gap: 8px; direction: ltr; line-height: 1;
+      font-family: "Great Vibes", cursive;
       background: var(--frame); -webkit-background-clip: text; background-clip: text;
       -webkit-text-fill-color: transparent;
-      line-height: 1;
     }
+    .mono-big .letter { font-size: 58px; }
+    .mono-big .amp { font-size: 28px; padding: 0 2px; }
     .bismillah {
       font-family: "Amiri", serif; text-align: center;
       font-size: 18px; color: var(--ink); margin: 8px 0 14px;
@@ -937,7 +941,11 @@
             <path d="M8 40c12-18 22-28 34-32" stroke="url(#goldGrad)" stroke-width="1" />
             <path d="M78 40c-12-18-22-28-34-32" stroke="url(#goldGrad)" stroke-width="1" />
           </svg>
-          <div class="mono-big" data-bind="mono"></div>
+          <div class="mono-big">
+            <span class="letter" data-bind="monoA"></span>
+            <span class="amp">&amp;</span>
+            <span class="letter" data-bind="monoB"></span>
+          </div>
         </div>
         <!--
         <p class="bismillah reveal-child" data-bind="bismillah"></p>
@@ -1076,7 +1084,9 @@
 
       /* Bind CONFIG → DOM */
       const BIND = {
-        mono: () => C.couple.monogram.a + " " + C.couple.monogram.b,
+        mono: () => C.couple.monogram.a + " & " + C.couple.monogram.b,
+        monoA: () => C.couple.monogram.a,
+        monoB: () => C.couple.monogram.b,
         namesEn: () => C.couple.groom.nameEn + " & " + C.couple.bride.nameEn,
         kicker: () => C.copy.kicker,
         openBtn: () => C.copy.openBtn,
