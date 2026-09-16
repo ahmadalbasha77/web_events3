@@ -315,6 +315,7 @@
       transform-style: preserve-3d;
       will-change: transform;
       animation: floatY 3.6s ease-in-out infinite;
+      cursor: pointer;
     }
     .envelope.is-opening { animation: none; }
     @keyframes floatY {
@@ -412,6 +413,15 @@
       filter: drop-shadow(0 7px 12px rgba(32,6,10,0.42));
       pointer-events: none;
     }
+    .seal-glow {
+      position: absolute; left: 50%; top: 28%;
+      width: 72px; height: 72px; margin-left: -36px;
+      border-radius: 50%;
+      z-index: 7;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(circle, rgba(232,213,163,0.55) 0%, rgba(196,161,90,0) 70%);
+    }
     .env-roses {
       position: absolute; right: -6px; top: 10px;
       width: 78px; z-index: 7; pointer-events: none;
@@ -420,26 +430,54 @@
     }
 
     .open-btn {
-      margin-top: 22px;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+      padding: 13px 30px;
+      position: relative;
+      overflow: hidden;
       font-family: "Tajawal", sans-serif;
-      letter-spacing: 0.04em;
-      font-size: 15px;
+      letter-spacing: 0.14em;
+      font-size: 14px;
       font-weight: 500;
-      padding: 12px 28px;
-      color: #fff;
+      color: #F7E7C8;
       border-radius: 999px;
-      background: var(--burgundy);
-      border: 1px solid var(--gold);
-      box-shadow: 0 10px 22px rgba(74,21,32,0.28);
-      animation: btnPulse 3.2s ease-in-out infinite;
+      background: linear-gradient(180deg, #8A3040 0%, #5C1A26 55%, #45141C 100%);
+      border: 1px solid #C4A15A;
+      box-shadow:
+        inset 0 1px 0 rgba(232,213,163,0.35),
+        inset 0 0 0 1px rgba(246,238,230,0.12),
+        0 12px 26px rgba(74,21,32,0.32);
+      animation: btnPulse 3.4s ease-in-out infinite;
     }
+    .open-btn::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(115deg, transparent 30%, rgba(255,248,230,0.28) 50%, transparent 70%);
+      transform: translateX(-120%) skewX(-16deg);
+      animation: btnSheen 4.2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .open-btn .ob-orn {
+      width: 6px; height: 6px; flex-shrink: 0;
+      transform: rotate(45deg);
+      background: linear-gradient(135deg, #E8D5A3, #9A7430);
+      box-shadow: 0 0 7px rgba(196,161,90,0.5);
+    }
+    .open-btn .ob-label { position: relative; z-index: 1; }
     .open-btn.is-opening {
       animation: none;
       pointer-events: none;
     }
+    .open-btn.is-opening::after { animation: none; }
     @keyframes btnPulse {
-      0%, 100% { box-shadow: 0 10px 22px rgba(74,21,32,0.28), 0 0 0 0 rgba(110,34,48,0.28); }
-      70% { box-shadow: 0 10px 22px rgba(74,21,32,0.28), 0 0 0 8px rgba(110,34,48,0); }
+      0%, 100% { box-shadow: inset 0 1px 0 rgba(232,213,163,0.35), 0 12px 26px rgba(74,21,32,0.32), 0 0 0 0 rgba(196,161,90,0.28); }
+      70% { box-shadow: inset 0 1px 0 rgba(232,213,163,0.35), 0 12px 26px rgba(74,21,32,0.32), 0 0 0 10px rgba(196,161,90,0); }
+    }
+    @keyframes btnSheen {
+      0%, 35% { transform: translateX(-120%) skewX(-16deg); }
+      55% { transform: translateX(130%) skewX(-16deg); }
+      100% { transform: translateX(130%) skewX(-16deg); }
     }
 
     #petals, #petals-bg {
@@ -919,13 +957,18 @@
             </div>
             <div class="flap-face flap-liner"></div>
           </div>
+          <span class="seal-glow" id="sealGlow" aria-hidden="true"></span>
           <img class="env-seal" id="envSeal" src="assets/wax-seal.webp" alt="">
           <img class="env-roses" src="assets/burgundy-florals.webp" alt="" />
         </div>
       </div>
     </div>
 
-    <button class="open-btn" id="openBtn" type="button" data-bind="openBtn"></button>
+    <button class="open-btn" id="openBtn" type="button">
+      <span class="ob-orn" aria-hidden="true"></span>
+      <span class="ob-label" data-bind="openBtn"></span>
+      <span class="ob-orn" aria-hidden="true"></span>
+    </button>
     </div>
   </section>
 
@@ -1377,6 +1420,7 @@
       const card = $("#envCard");
       let opened = false;
       $("#openBtn").addEventListener("click", openEnvelope);
+      envelope.addEventListener("click", openEnvelope);
 
       function openEnvelope() {
         if (opened) return; opened = true;
@@ -1387,18 +1431,25 @@
         if (REDUCE || typeof gsap === "undefined") {
           finishOpen(); return;
         }
+        const glow = $("#sealGlow");
         const tl = gsap.timeline({ onComplete: finishOpen });
-        tl.to(btn, { opacity: 0, y: 8, duration: 0.28, ease: "power2.out" }, 0)
-          .to("#envSeal", { y: -16, scale: 0.84, opacity: 0, duration: 0.55, ease: "power2.inOut" }, 0.06)
-          .to(".env-roses", { opacity: 0.12, duration: 0.45, ease: "power2.out" }, 0.16)
-          .to(flap, { rotateX: -160, duration: 1.45, ease: "power2.inOut" }, 0.28)
-          .to(card, { opacity: 1, duration: 0.5, ease: "power1.out" }, 0.92)
-          .set(card, { zIndex: 7 }, 1.05)
-          .to(card, { y: -92, duration: 1.15, ease: "lux" }, 1.08)
-          .add(burstPetals, 1.22)
-          .add(() => { $("#invite").classList.add("is-on"); }, 1.75)
-          .to(".kicker, .names-script, .landing-rule, .landing-corner", { opacity: 0, duration: 0.5, ease: "power2.out" }, 1.58)
-          .to("#landing", { opacity: 0, duration: 0.9, ease: "power2.inOut" }, 1.98);
+        tl.to(btn, { scale: 0.96, duration: 0.12, ease: "power2.out" }, 0)
+          .to(btn, { opacity: 0, y: 14, scale: 0.9, duration: 0.42, ease: "power2.in" }, 0.12)
+          .to(envelope, { y: -12, scale: 1.035, duration: 0.7, ease: "power2.out" }, 0.08)
+          .fromTo(glow, { opacity: 0, scale: 0.7 }, { opacity: 0.9, scale: 1.15, duration: 0.32, ease: "power1.out" }, 0.18)
+          .to("#envSeal", { scale: 1.08, duration: 0.28, ease: "power1.out" }, 0.2)
+          .to("#envSeal", { y: -32, scale: 0.72, opacity: 0, rotation: -10, duration: 0.72, ease: "power2.inOut" }, 0.46)
+          .to(glow, { opacity: 0, scale: 2.1, duration: 0.7, ease: "power2.out" }, 0.5)
+          .to(".env-roses", { opacity: 0.16, y: 8, duration: 0.55, ease: "power2.out" }, 0.52)
+          .to(flap, { rotateX: -168, duration: 1.55, ease: "power2.inOut" }, 0.58)
+          .to(card, { opacity: 1, duration: 0.45, ease: "power1.out" }, 1.12)
+          .set(card, { zIndex: 7 }, 1.25)
+          .fromTo(card, { y: 8, rotate: -1.6 }, { y: -108, rotate: 0, duration: 1.28, ease: "lux" }, 1.28)
+          .to(envelope, { y: 8, scale: 0.985, duration: 0.95, ease: "power2.inOut" }, 1.55)
+          .add(burstPetals, 1.38)
+          .to(".kicker, .names-script, .landing-rule, .landing-corner", { opacity: 0, y: -14, duration: 0.55, ease: "power2.out" }, 1.92)
+          .add(() => { $("#invite").classList.add("is-on"); }, 2.15)
+          .to("#landing", { opacity: 0, duration: 1.0, ease: "power2.inOut" }, 2.28);
       }
 
       function finishOpen() {
